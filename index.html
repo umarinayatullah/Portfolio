@@ -87,15 +87,15 @@ header{
   position:fixed; top:0; left:0; right:0; z-index:50;
   backdrop-filter:blur(16px) saturate(140%);
   -webkit-backdrop-filter:blur(16px) saturate(140%);
-  background:rgba(var(--panel), .55);
+  background:var(--header-bg-color, rgba(var(--panel), .55));
   border-bottom:1px solid rgba(var(--line),var(--line-a));
 }
 nav.wrap{display:flex; align-items:center; justify-content:space-between; height:68px;}
-.brandmark{display:flex; align-items:center; gap:10px; font-family:var(--disp); font-weight:600; font-size:15px; letter-spacing:.01em;}
+.brandmark{display:flex; align-items:center; gap:10px; font-family:var(--disp); font-weight:600; font-size:15px; letter-spacing:.01em; color:var(--header-ink, var(--ink));}
 .brandmark .cog{width:20px; height:20px; flex:none;}
-.navlinks{display:flex; gap:28px; font-size:13.5px; color:var(--ink-dim);}
-.navlinks a{position:relative; padding:4px 0; transition:color .2s;}
-.navlinks a:hover{color:var(--ink);}
+.navlinks{display:flex; gap:28px; font-size:13.5px; color:var(--header-ink, var(--ink-dim));}
+.navlinks a{position:relative; padding:4px 0; opacity:.72; transition:opacity .2s;}
+.navlinks a:hover{opacity:1;}
 .navlinks a::after{content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--accent); transition:width .25s ease;}
 .navlinks a:hover::after{width:100%;}
 .navtag{font-family:var(--mono); font-size:11px; color:var(--accent); border:1px solid rgba(var(--line),var(--line-a)); padding:5px 10px; border-radius:2px;}
@@ -373,6 +373,19 @@ footer{padding:90px 0 50px;}
 .mode-toggle button.active{border-color:var(--accent); color:var(--accent); background:rgba(201,128,63,.08);}
 
 .hint{font-size:11.5px; color:var(--ink-faint); margin-bottom:18px; line-height:1.6; padding:12px; border:1px dashed rgba(var(--line),var(--line-a)); border-radius:4px;}
+
+.theme-subhead{font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-faint); margin:22px 0 10px; text-transform:uppercase;}
+.theme-subhead:first-of-type{margin-top:0;}
+.font-option-grid{display:flex; flex-direction:column; gap:8px; margin-bottom:6px;}
+.font-option{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:13px 14px; border:1px solid rgba(var(--line),var(--line-a)); border-radius:4px;
+  background:transparent; color:var(--ink); text-align:left; cursor:pointer;
+}
+.font-option .fo-name{font-size:12px; font-family:var(--mono); color:var(--ink-faint);}
+.font-option .fo-sample{font-size:16px;}
+.font-option.active{border-color:var(--accent); background:rgba(201,128,63,.08);}
+.font-option.active .fo-name{color:var(--accent);}
 
 /* responsive */
 @media (max-width:900px){
@@ -718,22 +731,56 @@ footer{padding:90px 0 50px;}
 
       <div class="admin-pane" id="pane-theme">
         <div class="hint">Changes here apply instantly for you and are saved to this browser, so returning visitors on this device/browser will see them too.</div>
+
+        <div class="theme-subhead">Mode</div>
         <div class="mode-toggle">
           <button id="modeDark" class="active">Dark mode</button>
           <button id="modeLight">Light mode</button>
         </div>
-        <div class="field"><label>Accent colour presets</label></div>
+
+        <div class="theme-subhead">Header bar</div>
+        <div class="custom-color-row">
+          <input type="color" id="customHeaderBg" value="#ffffff">
+          <span style="font-size:12.5px; color:var(--ink-dim);">Header background colour</span>
+        </div>
+        <div class="custom-color-row">
+          <input type="color" id="customHeaderInk" value="#e9e7e1">
+          <span style="font-size:12.5px; color:var(--ink-dim);">Header text &amp; logo colour</span>
+        </div>
+
+        <div class="theme-subhead">Typeface</div>
+        <div class="font-option-grid" id="fontOptions"></div>
+
+        <div class="theme-subhead">Background colour</div>
+        <div class="custom-color-row">
+          <input type="color" id="customBg" value="#10141a">
+          <span style="font-size:12.5px; color:var(--ink-dim);">Main background</span>
+        </div>
+        <div class="custom-color-row">
+          <input type="color" id="customBg2" value="#151b22">
+          <span style="font-size:12.5px; color:var(--ink-dim);">Panel / admin background</span>
+        </div>
+
+        <div class="theme-subhead">Text colour</div>
+        <div class="custom-color-row">
+          <input type="color" id="customInk" value="#e9e7e1">
+          <span style="font-size:12.5px; color:var(--ink-dim);">Main text colour</span>
+        </div>
+
+        <div class="theme-subhead">Accent colour</div>
         <div class="swatch-grid" id="accentSwatches"></div>
         <div class="custom-color-row">
           <input type="color" id="customAccent" value="#c9803f">
           <span style="font-size:12.5px; color:var(--ink-dim);">Custom accent colour</span>
         </div>
-        <div class="field"><label>Secondary accent colour presets</label></div>
+
+        <div class="theme-subhead">Secondary accent colour</div>
         <div class="swatch-grid" id="accent2Swatches"></div>
         <div class="custom-color-row">
           <input type="color" id="customAccent2" value="#4a86a6">
           <span style="font-size:12.5px; color:var(--ink-dim);">Custom secondary colour</span>
         </div>
+
         <button class="btn-sm" id="resetTheme" style="margin-top:6px;">Reset theme to default</button>
       </div>
 
@@ -809,10 +856,19 @@ const DEFAULTS = {
     sub:"Open to graduate engineering roles, internships and collaborative projects.",
     footname:"© 2026 Muhammad Umar Inayatullah"
   },
-  theme:{ mode:"dark", accent:"#c9803f", accent2:"#4a86a6" }
+  theme:{ mode:"dark", accent:"#c9803f", accent2:"#4a86a6", bg:"#10141a", bg2:"#151b22", ink:"#e9e7e1", font:"space-grotesk-inter", headerBg:"#ffffff", headerBgAlpha:0.55, headerInk:"#e9e7e1" }
 };
 
 const ACCENTS = ["#c9803f","#c1543a","#4a86a6","#5c8a5c","#a06bc9","#c9a63f","#d16b93","#4fbf7a","#e0685f","#7c8ffc","#3f9ec9","#b08a5a"];
+
+/* Font pairings available in the admin panel. Google-Fonts links are already
+   loaded in <head>; "system" falls back to native fonts so it works offline. */
+const FONTS = {
+  "space-grotesk-inter": { label:"Space Grotesk / Inter", disp:"'Space Grotesk', sans-serif", body:"'Inter', sans-serif" },
+  "inter-inter":         { label:"Inter / Inter",         disp:"'Inter', sans-serif",          body:"'Inter', sans-serif" },
+  "jetbrains-inter":     { label:"JetBrains Mono / Inter",disp:"'JetBrains Mono', monospace",  body:"'Inter', sans-serif" },
+  "system":              { label:"System default",        disp:"-apple-system, Segoe UI, Roboto, sans-serif", body:"-apple-system, Segoe UI, Roboto, sans-serif" }
+};
 
 const STORE_KEY = "umar_portfolio_data_v1";
 // Obfuscated so the plain string isn't sitting in the page source at a glance.
@@ -954,10 +1010,52 @@ function bindTilt(){
   });
 }
 
+/* Convert a hex colour like #10141a to an "r,g,b" string, for use with
+   rgba(var(--bg-rgb), alpha) style variables used across the page. */
+function hexToRgbStr(hex){
+  const h = hex.replace("#","");
+  const full = h.length===3 ? h.split("").map(c=>c+c).join("") : h;
+  const num = parseInt(full,16);
+  if(isNaN(num)) return "16,20,26";
+  const r = (num>>16)&255, g=(num>>8)&255, b=num&255;
+  return `${r},${g},${b}`;
+}
+/* Rough luminance check so panel/line colours stay legible against a custom
+   background regardless of whether it's light or dark. */
+function isLight(hex){
+  const [r,g,b] = hexToRgbStr(hex).split(",").map(Number);
+  return (0.299*r + 0.587*g + 0.114*b) > 150;
+}
+
 function applyTheme(){
-  document.documentElement.setAttribute("data-theme", data.theme.mode === "light" ? "light" : "dark");
-  document.documentElement.style.setProperty("--accent", data.theme.accent);
-  document.documentElement.style.setProperty("--accent2", data.theme.accent2);
+  const t = data.theme;
+  document.documentElement.setAttribute("data-theme", t.mode === "light" ? "light" : "dark");
+
+  const root = document.documentElement.style;
+  root.setProperty("--accent", t.accent);
+  root.setProperty("--accent2", t.accent2);
+  root.setProperty("--bg", t.bg);
+  root.setProperty("--bg2", t.bg2);
+  root.setProperty("--ink", t.ink);
+
+  // panel / line colours are derived from ink/bg so borders & glass panels
+  // still read correctly against whatever background the admin picks
+  const light = isLight(t.bg);
+  root.setProperty("--panel", hexToRgbStr(t.ink));
+  root.setProperty("--panel-a", light ? ".05" : ".045");
+  root.setProperty("--line", hexToRgbStr(t.ink));
+  root.setProperty("--line-a", light ? ".12" : ".08");
+  root.setProperty("--ink-dim", light ? "#4d565c" : "#9aa3ad");
+  root.setProperty("--ink-faint", light ? "#8a929a" : "#5c6570");
+  root.setProperty("--accent-ink", light ? "#fff" : "#0f1216");
+
+  const fk = FONTS[t.font] ? t.font : "space-grotesk-inter";
+  root.setProperty("--disp", FONTS[fk].disp);
+  root.setProperty("--body", FONTS[fk].body);
+
+  const headerAlpha = t.headerBgAlpha!=null ? t.headerBgAlpha : 0.55;
+  root.setProperty("--header-bg-color", `rgba(${hexToRgbStr(t.headerBg || "#ffffff")}, ${headerAlpha})`);
+  root.setProperty("--header-ink", t.headerInk || t.ink);
 }
 
 /* background scene: dots + parallax */
@@ -1184,12 +1282,44 @@ function buildThemeSwatches(){
 
   document.getElementById("customAccent").value = data.theme.accent;
   document.getElementById("customAccent2").value = data.theme.accent2;
+  document.getElementById("customBg").value = data.theme.bg;
+  document.getElementById("customBg2").value = data.theme.bg2;
+  document.getElementById("customInk").value = data.theme.ink;
+  document.getElementById("customHeaderBg").value = data.theme.headerBg || "#ffffff";
+  document.getElementById("customHeaderInk").value = data.theme.headerInk || data.theme.ink;
 
   document.getElementById("modeDark").classList.toggle("active", data.theme.mode !== "light");
   document.getElementById("modeLight").classList.toggle("active", data.theme.mode === "light");
+
+  buildFontOptions();
 }
+
+function buildFontOptions(){
+  const holder = document.getElementById("fontOptions");
+  holder.innerHTML = Object.keys(FONTS).map(key=>{
+    const f = FONTS[key];
+    const active = (data.theme.font === key) || (!data.theme.font && key==="space-grotesk-inter");
+    return `<button type="button" class="font-option ${active?'active':''}" data-font="${key}" style="font-family:${f.disp}">
+      <span class="fo-sample">Aa — ${esc(f.label)}</span>
+      <span class="fo-name">${active?'Selected':'Use'}</span>
+    </button>`;
+  }).join("");
+  holder.querySelectorAll(".font-option").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      data.theme.font = btn.dataset.font;
+      applyTheme();
+      buildFontOptions();
+    });
+  });
+}
+
 document.getElementById("customAccent").addEventListener("input", e=>{ data.theme.accent = e.target.value; applyTheme(); buildThemeSwatches(); });
 document.getElementById("customAccent2").addEventListener("input", e=>{ data.theme.accent2 = e.target.value; applyTheme(); buildThemeSwatches(); });
+document.getElementById("customBg").addEventListener("input", e=>{ data.theme.bg = e.target.value; applyTheme(); });
+document.getElementById("customBg2").addEventListener("input", e=>{ data.theme.bg2 = e.target.value; applyTheme(); });
+document.getElementById("customInk").addEventListener("input", e=>{ data.theme.ink = e.target.value; applyTheme(); });
+document.getElementById("customHeaderBg").addEventListener("input", e=>{ data.theme.headerBg = e.target.value; applyTheme(); });
+document.getElementById("customHeaderInk").addEventListener("input", e=>{ data.theme.headerInk = e.target.value; applyTheme(); });
 document.getElementById("modeDark").addEventListener("click", ()=>{ data.theme.mode = "dark"; applyTheme(); buildThemeSwatches(); });
 document.getElementById("modeLight").addEventListener("click", ()=>{ data.theme.mode = "light"; applyTheme(); buildThemeSwatches(); });
 document.getElementById("resetTheme").addEventListener("click", ()=>{
