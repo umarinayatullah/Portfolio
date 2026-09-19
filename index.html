@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Umar Inayatullah — Mechanical Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#10141a;
+  --bg2:#151b22;
+  --panel: 255,255,255;
+  --panel-a:.045;
+  --line: 255,255,255;
+  --line-a:.08;
+  --ink:#e9e7e1;
+  --ink-dim:#9aa3ad;
+  --ink-faint:#5c6570;
+  --accent:#c9803f;
+  --accent2:#4a86a6;
+  --accent-ink:#0f1216;
+  --radius: 3px;
+  --disp: 'Space Grotesk', sans-serif;
+  --body: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+:root[data-theme="light"]{
+  --bg:#eef0f0;
+  --bg2:#e6e8e7;
+  --panel: 20,26,30;
+  --panel-a:.04;
+  --line: 20,26,30;
+  --line-a:.12;
+  --ink:#171b1e;
+  --ink-dim:#4d565c;
+  --ink-faint:#8a929a;
+  --accent-ink:#fff;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  line-height:1.55;
+  overflow-x:hidden;
+  transition:background .4s ease, color .4s ease;
+}
+::selection{background:var(--accent); color:var(--accent-ink);}
+a{color:inherit; text-decoration:none;}
+img{max-width:100%; display:block;}
+button{font-family:inherit; cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+
+/* ============ BACKGROUND LAYERS (parallax depth) ============ */
+.bg-scene{position:fixed; inset:0; z-index:0; pointer-events:none; perspective:1200px;}
+.bg-grid{
+  position:absolute; inset:-10%;
+  background-image:
+    linear-gradient(rgba(var(--line),var(--line-a)) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--line),var(--line-a)) 1px, transparent 1px);
+  background-size:64px 64px;
+  transform:translateZ(-200px) scale(1.3) rotateX(2deg);
+  transition:transform .2s ease-out;
+}
+.bg-glow{
+  position:absolute; width:70vmax; height:70vmax; border-radius:50%;
+  background:radial-gradient(circle, rgba(201,128,63,.16), transparent 60%);
+  top:-20vmax; right:-20vmax; filter:blur(10px);
+  transform:translateZ(-120px);
+}
+.bg-glow.two{
+  background:radial-gradient(circle, rgba(74,134,166,.14), transparent 60%);
+  top:auto; bottom:-25vmax; left:-15vmax; right:auto;
+}
+.bg-dots{position:absolute; inset:0; transform:translateZ(-80px);}
+.bg-dots span{
+  position:absolute; width:3px; height:3px; border-radius:50%;
+  background:rgba(var(--line),.35);
+}
+
+/* ============ LAYOUT SHELL ============ */
+.wrap{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 32px;}
+header{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  background:rgba(var(--panel), .55);
+  border-bottom:1px solid rgba(var(--line),var(--line-a));
+}
+nav.wrap{display:flex; align-items:center; justify-content:space-between; height:68px;}
+.brandmark{display:flex; align-items:center; gap:10px; font-family:var(--disp); font-weight:600; font-size:15px; letter-spacing:.01em;}
+.brandmark .cog{width:20px; height:20px; flex:none;}
+.navlinks{display:flex; gap:28px; font-size:13.5px; color:var(--ink-dim);}
+.navlinks a{position:relative; padding:4px 0; transition:color .2s;}
+.navlinks a:hover{color:var(--ink);}
+.navlinks a::after{content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--accent); transition:width .25s ease;}
+.navlinks a:hover::after{width:100%;}
+.navtag{font-family:var(--mono); font-size:11px; color:var(--accent); border:1px solid rgba(var(--line),var(--line-a)); padding:5px 10px; border-radius:2px;}
+
+main{position:relative; z-index:1;}
+
+/* ============ HERO ============ */
+.hero{
+  min-height:100svh; display:flex; align-items:center;
+  padding-top:68px; position:relative;
+}
+.hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:60px; align-items:center; width:100%;}
+.sheet-no{font-family:var(--mono); font-size:12px; color:var(--accent); letter-spacing:.12em; display:flex; align-items:center; gap:10px; margin-bottom:22px;}
+.sheet-no i{display:inline-block; width:30px; height:1px; background:var(--accent);}
+.hero h1{
+  font-family:var(--disp); font-weight:700;
+  font-size:clamp(38px, 5.4vw, 68px); line-height:1.03; letter-spacing:-.02em;
+  margin-bottom:22px;
+}
+.hero h1 span{color:var(--accent);}
+.hero p.tagline{font-size:16.5px; color:var(--ink-dim); max-width:46ch; margin-bottom:30px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px 26px; font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); margin-bottom:34px;}
+.hero-meta span{display:flex; align-items:center; gap:7px;}
+.hero-meta b{color:var(--ink-dim); font-weight:500;}
+.hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{
+  padding:13px 24px; border-radius:var(--radius); font-size:13.5px; font-weight:500;
+  border:1px solid rgba(var(--line),var(--line-a)); transition:all .22s ease; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-solid{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+.btn-solid:hover{filter:brightness(1.1); transform:translateY(-1px);}
+.btn-ghost{background:rgba(var(--panel),.5); color:var(--ink);}
+.btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
+
+/* rotating 3D emblem */
+.emblem-stage{
+  height:420px; display:flex; align-items:center; justify-content:center;
+  perspective:900px;
+}
+.emblem{
+  position:relative; width:230px; height:230px;
+  transform-style:preserve-3d;
+  animation:spin 22s linear infinite;
+}
+@keyframes spin{
+  from{transform:rotateX(-18deg) rotateY(0deg);}
+  to{transform:rotateX(-18deg) rotateY(360deg);}
+}
+.ring{
+  position:absolute; inset:0; border-radius:50%;
+  border:1px solid rgba(var(--line), .22);
+}
+.ring.r1{transform:rotateX(90deg) translateZ(0);}
+.ring.r2{transform:rotateY(90deg) translateZ(0); border-color:rgba(201,128,63,.35);}
+.ring.r3{transform:rotateX(60deg) rotateY(30deg) translateZ(0); border-color:rgba(74,134,166,.3);}
+.ring.r4{width:70%; height:70%; top:15%; left:15%; border-color:rgba(var(--line),.3); transform:rotateY(90deg);}
+.core{
+  position:absolute; top:50%; left:50%; width:64px; height:64px; margin:-32px;
+  border-radius:50%;
+  background:linear-gradient(155deg, var(--accent), var(--accent2));
+  box-shadow:0 0 50px rgba(201,128,63,.45);
+  transform:translateZ(30px);
+}
+.tick{
+  position:absolute; width:2px; height:14px; background:rgba(var(--line),.4);
+  top:50%; left:50%; transform-origin:1px 115px;
+}
+
+/* ============ SECTIONS ============ */
+section{padding:120px 0; position:relative; border-top:1px solid rgba(var(--line),var(--line-a));}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:56px; gap:20px; flex-wrap:wrap;}
+.section-head h2{font-family:var(--disp); font-weight:600; font-size:clamp(26px,3vw,36px); letter-spacing:-.01em;}
+.section-head .idx{font-family:var(--mono); font-size:12px; color:var(--accent);}
+.lede{color:var(--ink-dim); font-size:15.5px; max-width:60ch; margin-bottom:20px;}
+
+/* glass panel */
+.panel{
+  background:rgba(var(--panel), var(--panel-a));
+  border:1px solid rgba(var(--line),var(--line-a));
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-radius:var(--radius);
+}
+
+/* About */
+.about-layout{display:grid; grid-template-columns:1fr 280px; gap:50px; align-items:start;}
+.about-text{font-size:16px; color:var(--ink-dim);}
+.about-text p{margin-bottom:16px;}
+.stat-card{padding:22px 22px; margin-bottom:14px;}
+.stat-card .num{font-family:var(--disp); font-size:26px; font-weight:600; color:var(--accent);}
+.stat-card .lbl{font-family:var(--mono); font-size:11px; color:var(--ink-faint); letter-spacing:.06em; margin-top:4px;}
+
+/* timeline (education / experience) */
+.tl{position:relative; padding-left:28px;}
+.tl::before{content:""; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background:rgba(var(--line),var(--line-a));}
+.tl-item{position:relative; padding-bottom:44px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{content:""; position:absolute; left:-28px; top:5px; width:9px; height:9px; border-radius:50%; background:var(--bg); border:2px solid var(--accent);}
+.tl-item h3{font-family:var(--disp); font-size:19px; font-weight:600; margin-bottom:3px;}
+.tl-item .meta{font-family:var(--mono); font-size:12px; color:var(--accent2); margin-bottom:10px;}
+.tl-item .loc{color:var(--ink-faint); font-size:13px; margin-bottom:8px;}
+.tl-item ul{color:var(--ink-dim); font-size:14.5px; padding-left:18px;}
+.tl-item ul li{margin-bottom:6px;}
+
+/* project cards — tilt */
+.grid-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+.tilt-card{
+  padding:26px 24px; position:relative; overflow:hidden;
+  transform-style:preserve-3d; transition:transform .12s ease, border-color .25s;
+  cursor:default;
+}
+.tilt-card:hover{border-color:rgba(201,128,63,.45);}
+.tilt-card .tag{font-family:var(--mono); font-size:10.5px; color:var(--accent); letter-spacing:.08em; margin-bottom:12px; display:block;}
+.tilt-card h3{font-family:var(--disp); font-size:17.5px; font-weight:600; margin-bottom:10px; line-height:1.25;}
+.tilt-card p{font-size:13.8px; color:var(--ink-dim);}
+.tilt-card .corner{position:absolute; width:14px; height:14px; border-color:var(--accent); opacity:.5;}
+.tilt-card .corner.tl{top:8px; left:8px; border-top:1px solid; border-left:1px solid;}
+.tilt-card .corner.br{bottom:8px; right:8px; border-bottom:1px solid; border-right:1px solid;}
+
+/* final year spotlight */
+.spotlight{padding:44px; display:grid; grid-template-columns:auto 1fr; gap:36px; align-items:center;}
+.spotlight .badge{
+  width:88px; height:88px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(155deg, rgba(201,128,63,.25), rgba(74,134,166,.2));
+  border:1px solid rgba(201,128,63,.4);
+  font-family:var(--disp); font-weight:700; font-size:12px; text-align:center; color:var(--accent);
+}
+.spotlight h3{font-family:var(--disp); font-size:22px; margin-bottom:8px;}
+.spotlight p{color:var(--ink-dim); font-size:15px;}
+
+/* extracurricular */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.duo .panel{padding:26px 24px;}
+.duo h3{font-family:var(--disp); font-size:17px; margin-bottom:4px;}
+.duo .meta{font-family:var(--mono); font-size:11.5px; color:var(--accent2); margin-bottom:10px;}
+.duo p{font-size:14px; color:var(--ink-dim);}
+
+/* certs & awards */
+.strip-list{display:flex; flex-direction:column; gap:1px; border:1px solid rgba(var(--line),var(--line-a)); border-radius:var(--radius); overflow:hidden;}
+.strip-row{
+  display:grid; grid-template-columns:1fr auto auto; gap:16px; align-items:center;
+  padding:18px 22px; background:rgba(var(--panel), var(--panel-a));
+  backdrop-filter:blur(14px);
+}
+.strip-row .t{font-weight:500; font-size:14.5px;}
+.strip-row .s{font-size:12.5px; color:var(--ink-faint); font-family:var(--mono);}
+.strip-row .y{font-family:var(--mono); font-size:12px; color:var(--accent); white-space:nowrap;}
+
+/* skills */
+.skill-cloud{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{
+  padding:9px 16px; border-radius:2px; font-size:13px; font-family:var(--mono);
+  border:1px solid rgba(var(--line),var(--line-a)); color:var(--ink-dim);
+  transition:all .2s;
+}
+.chip:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px);}
+.skills-cols{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+.skills-cols h4{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; color:var(--ink-faint); margin-bottom:16px;}
+
+/* contact / footer */
+footer{padding:90px 0 50px;}
+.contact-panel{padding:52px; text-align:center;}
+.contact-panel h2{font-family:var(--disp); font-size:clamp(28px,4vw,42px); margin-bottom:14px;}
+.contact-panel p{color:var(--ink-dim); margin-bottom:30px;}
+.contact-links{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+.foot-bottom{display:flex; justify-content:space-between; align-items:center; margin-top:60px; font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); flex-wrap:wrap; gap:10px;}
+
+/* reveal on scroll */
+.reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+.reveal.in{opacity:1; transform:translateY(0);}
+
+/* ============ ADMIN TRIGGER ============ */
+#admin-fab{
+  position:fixed; bottom:24px; right:24px; z-index:80;
+  width:46px; height:46px; border-radius:50%;
+  background:rgba(var(--panel), .5); border:1px solid rgba(var(--line),var(--line-a));
+  backdrop-filter:blur(12px);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--ink-faint); opacity:.45; transition:all .3s ease;
+}
+#admin-fab:hover{opacity:1; color:var(--accent); border-color:var(--accent); transform:rotate(45deg);}
+#admin-fab svg{width:19px; height:19px;}
+
+/* ============ MODAL (password) ============ */
+.modal-mask{
+  position:fixed; inset:0; z-index:200; background:rgba(6,8,10,.72);
+  backdrop-filter:blur(6px);
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.modal-mask.show{display:flex;}
+.modal-box{
+  width:100%; max-width:360px; background:var(--bg2); border:1px solid rgba(var(--line),var(--line-a));
+  border-radius:6px; padding:32px 28px; position:relative;
+}
+.modal-box h3{font-family:var(--disp); font-size:18px; margin-bottom:6px;}
+.modal-box p.sub{font-size:12.5px; color:var(--ink-faint); margin-bottom:20px; font-family:var(--mono);}
+.field{margin-bottom:16px;}
+.field label{display:block; font-size:11.5px; font-family:var(--mono); color:var(--ink-faint); margin-bottom:7px; letter-spacing:.05em;}
+.field input, .field textarea, .field select{
+  width:100%; padding:11px 13px; background:rgba(0,0,0,.22); border:1px solid rgba(var(--line),var(--line-a));
+  border-radius:3px; color:var(--ink); font-size:13.5px; outline:none; transition:border-color .2s;
+}
+:root[data-theme="light"] .field input, :root[data-theme="light"] .field textarea, :root[data-theme="light"] .field select{
+  background:rgba(0,0,0,.03);
+}
+.field input:focus, .field textarea:focus{border-color:var(--accent);}
+.field textarea{resize:vertical; min-height:64px; font-family:var(--body);}
+.err-msg{color:#e0685f; font-size:12px; margin-top:-6px; margin-bottom:14px; display:none; font-family:var(--mono);}
+.modal-actions{display:flex; gap:10px; margin-top:6px;}
+.modal-close{
+  position:absolute; top:14px; right:14px; width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; color:var(--ink-faint); border:none; background:transparent;
+}
+.modal-close:hover{color:var(--ink);}
+
+/* ============ ADMIN PANEL ============ */
+#admin-panel{
+  position:fixed; inset:0; z-index:150; display:none;
+  background:rgba(8,10,12,.88); backdrop-filter:blur(10px);
+}
+#admin-panel.show{display:block;}
+.admin-shell{
+  position:absolute; top:0; right:0; bottom:0; width:min(560px, 100%);
+  background:var(--bg2); border-left:1px solid rgba(var(--line),var(--line-a));
+  display:flex; flex-direction:column;
+  animation:slidein .3s ease;
+}
+@keyframes slidein{from{transform:translateX(30px); opacity:0;} to{transform:translateX(0); opacity:1;}}
+.admin-top{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 24px; border-bottom:1px solid rgba(var(--line),var(--line-a));
+}
+.admin-top h2{font-family:var(--disp); font-size:16px; display:flex; align-items:center; gap:9px;}
+.admin-top h2 .dot{width:7px; height:7px; border-radius:50%; background:#4fbf7a; box-shadow:0 0 8px #4fbf7a;}
+.admin-tabs{display:flex; gap:2px; padding:0 24px; border-bottom:1px solid rgba(var(--line),var(--line-a)); overflow-x:auto;}
+.admin-tabs button{
+  padding:13px 15px; background:none; border:none; color:var(--ink-faint); font-size:12.5px;
+  border-bottom:2px solid transparent; white-space:nowrap; font-family:var(--mono);
+}
+.admin-tabs button.active{color:var(--accent); border-color:var(--accent);}
+.admin-body{flex:1; overflow-y:auto; padding:24px;}
+.admin-body::-webkit-scrollbar{width:8px;}
+.admin-body::-webkit-scrollbar-thumb{background:rgba(var(--line),.15); border-radius:4px;}
+.admin-foot{padding:16px 24px; border-top:1px solid rgba(var(--line),var(--line-a)); display:flex; gap:10px; justify-content:space-between; align-items:center;}
+.save-status{font-family:var(--mono); font-size:11.5px; color:#4fbf7a; opacity:0; transition:opacity .3s;}
+.save-status.show{opacity:1;}
+
+.admin-pane{display:none;}
+.admin-pane.active{display:block;}
+.mini-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+.mini-head h4{font-family:var(--disp); font-size:14.5px;}
+.btn-sm{padding:7px 13px; font-size:12px; border-radius:3px; border:1px solid rgba(var(--line),var(--line-a)); background:transparent; color:var(--ink-dim);}
+.btn-sm:hover{border-color:var(--accent); color:var(--accent);}
+.btn-sm.danger:hover{border-color:#e0685f; color:#e0685f;}
+.entry-card{
+  border:1px solid rgba(var(--line),var(--line-a)); border-radius:4px; padding:16px; margin-bottom:14px; background:rgba(0,0,0,.15);
+}
+.entry-card .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.entry-card .rm{display:flex; justify-content:flex-end; margin-top:8px;}
+
+/* theme swatches */
+.swatch-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:20px;}
+.swatch{
+  width:100%; aspect-ratio:1; border-radius:50%; cursor:pointer; border:2px solid transparent; position:relative;
+  transition:transform .15s ease;
+}
+.swatch:hover{transform:scale(1.1);}
+.swatch.active{border-color:var(--ink);}
+.swatch.active::after{content:"✓"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; text-shadow:0 1px 2px rgba(0,0,0,.5);}
+.custom-color-row{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
+.custom-color-row input[type=color]{width:44px; height:34px; border:none; background:none; padding:0; border-radius:4px; overflow:hidden;}
+.mode-toggle{display:flex; gap:8px; margin-bottom:20px;}
+.mode-toggle button{flex:1; padding:10px; border-radius:4px; border:1px solid rgba(var(--line),var(--line-a)); background:transparent; color:var(--ink-dim); font-size:12.5px;}
+.mode-toggle button.active{border-color:var(--accent); color:var(--accent); background:rgba(201,128,63,.08);}
+
+.hint{font-size:11.5px; color:var(--ink-faint); margin-bottom:18px; line-height:1.6; padding:12px; border:1px dashed rgba(var(--line),var(--line-a)); border-radius:4px;}
+
+/* responsive */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .emblem-stage{height:260px; order:-1;}
+  .about-layout{grid-template-columns:1fr;}
+  .grid-cards{grid-template-columns:1fr 1fr;}
+  .duo{grid-template-columns:1fr;}
+  .skills-cols{grid-template-columns:1fr;}
+  .navlinks{display:none;}
+}
+@media (max-width:620px){
+  .grid-cards{grid-template-columns:1fr;}
+  .spotlight{grid-template-columns:1fr; text-align:center; justify-items:center;}
+  .strip-row{grid-template-columns:1fr; text-align:left;}
+  section{padding:80px 0;}
+  .wrap{padding:0 20px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .emblem{animation:none;}
+  .reveal{transition:none; opacity:1; transform:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-scene" id="bgScene">
+  <div class="bg-grid" id="bgGrid"></div>
+  <div class="bg-glow"></div>
+  <div class="bg-glow two"></div>
+  <div class="bg-dots" id="bgDots"></div>
+</div>
+
+<header>
+  <nav class="wrap">
+    <div class="brandmark">
+      <svg class="cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span id="brandName">M. Umar Inayatullah</span>
+    </div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="navtag">MECH-ENG / 2026</div>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="sheet-no"><i></i> SHEET 01 — TITLE BLOCK</div>
+        <h1 id="heroName">Muhammad Umar<br><span>Inayatullah</span></h1>
+        <p class="tagline" id="heroTagline">Fresh mechanical engineering graduate designing, simulating and building real hardware — from robotic grippers to CFD-optimised aerodynamics.</p>
+        <div class="hero-meta">
+          <span><b>Based</b> <span id="heroLocation">Attock, Pakistan</span></span>
+          <span><b>Email</b> <span id="heroEmail">umarinayatullah@gmail.com</span></span>
+          <span><b>Phone</b> <span id="heroPhone">+92-302-5120659</span></span>
+        </div>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-solid">View projects</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+      <div class="emblem-stage">
+        <div class="emblem" id="emblem">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+          <div class="ring r4"></div>
+          <div class="core"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>About</h2>
+        <span class="idx">SHEET 02</span>
+      </div>
+      <div class="about-layout">
+        <div class="about-text reveal" id="aboutText">
+          <p>I am a fresh, motivated and adaptable mechanical engineer with a strong ability to learn quickly and perform effectively in high-pressure environments. I am eager to apply my engineering knowledge in design, analysis and problem-solving while exploring new technologies and continuously improving my skills.</p>
+          <p>I strive to contribute to an organisation that values innovation, teamwork and practical engineering solutions.</p>
+        </div>
+        <div id="aboutStats">
+          <div class="panel stat-card reveal"><div class="num">3.22</div><div class="lbl">CGPA — B.SC MECH. ENG</div></div>
+          <div class="panel stat-card reveal"><div class="num">6+</div><div class="lbl">ENGINEERING PROJECTS</div></div>
+          <div class="panel stat-card reveal"><div class="num">3</div><div class="lbl">LEADERSHIP ROLES</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Education</h2>
+        <span class="idx">SHEET 03</span>
+      </div>
+      <div class="tl" id="eduList"></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Experience</h2>
+        <span class="idx">SHEET 04</span>
+      </div>
+      <div class="tl" id="expList"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Projects</h2>
+        <span class="idx">SHEET 05</span>
+      </div>
+      <p class="lede reveal">Hands-on work spanning mechatronics, thermal analysis, materials testing and computational fluid dynamics.</p>
+      <div class="grid-cards" id="projList"></div>
+    </div>
+  </section>
+
+  <!-- FINAL YEAR PROJECT -->
+  <section id="fyp">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Final Year Project</h2>
+        <span class="idx">SHEET 06</span>
+      </div>
+      <div class="panel spotlight reveal" id="fypBlock">
+        <div class="badge">FYP<br>2026</div>
+        <div>
+          <h3 id="fypTitle">Lubricant Analysis of Diesel Fuelled Engine</h3>
+          <p id="fypDesc">Analysis of lubricant performance and degradation in a diesel-fuelled engine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXTRACURRICULAR -->
+  <section id="extra">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Extracurricular &amp; Volunteering</h2>
+        <span class="idx">SHEET 07</span>
+      </div>
+      <div class="duo" id="extraList"></div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certs">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Certifications</h2>
+        <span class="idx">SHEET 08</span>
+      </div>
+      <div class="strip-list" id="certList"></div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section id="awards">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Awards &amp; Honours</h2>
+        <span class="idx">SHEET 09</span>
+      </div>
+      <div class="strip-list" id="awardList"></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Skills &amp; Interests</h2>
+        <span class="idx">SHEET 10</span>
+      </div>
+      <div class="skills-cols reveal">
+        <div>
+          <h4>TECHNICAL</h4>
+          <div class="skill-cloud" id="techSkills"></div>
+        </div>
+        <div>
+          <h4>HOBBIES &amp; INTERESTS</h4>
+          <div class="skill-cloud" id="hobbySkills"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <footer id="contact">
+    <div class="wrap">
+      <div class="panel contact-panel reveal">
+        <h2>Let's build something.</h2>
+        <p id="contactSub">Open to graduate engineering roles, internships and collaborative projects.</p>
+        <div class="contact-links">
+          <a class="btn btn-solid" id="contactEmail" href="mailto:umarinayatullah@gmail.com">Email me</a>
+          <a class="btn btn-ghost" id="contactLinkedin" href="https://www.linkedin.com/in/u-inayat" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" id="contactPhoneBtn" href="tel:+923025120659">Call</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span id="footName">© 2026 Muhammad Umar Inayatullah</span>
+        <span>Built as a technical drawing sheet — mechanical engineering portfolio</span>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- ADMIN FAB -->
+<button id="admin-fab" title="Admin">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+</button>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-mask" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" id="closeLogin">✕</button>
+    <h3>Admin access</h3>
+    <p class="sub">SHEET 00 / RESTRICTED — enter password to edit this portfolio</p>
+    <div class="field">
+      <label for="pwInput">Password</label>
+      <input type="password" id="pwInput" placeholder="••••••••" autocomplete="off">
+    </div>
+    <div class="err-msg" id="pwError">Incorrect password. Try again.</div>
+    <div class="modal-actions">
+      <button class="btn btn-solid" id="pwSubmit" style="flex:1; justify-content:center;">Unlock panel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-shell">
+    <div class="admin-top">
+      <h2><span class="dot"></span> Admin panel</h2>
+      <button class="btn-sm" id="logoutBtn">Exit</button>
+    </div>
+    <div class="admin-tabs" id="adminTabs">
+      <button data-pane="pane-hero" class="active">Hero</button>
+      <button data-pane="pane-about">About</button>
+      <button data-pane="pane-edu">Education</button>
+      <button data-pane="pane-exp">Experience</button>
+      <button data-pane="pane-proj">Projects</button>
+      <button data-pane="pane-fyp">FYP</button>
+      <button data-pane="pane-extra">Extracurr.</button>
+      <button data-pane="pane-certs">Certs</button>
+      <button data-pane="pane-awards">Awards</button>
+      <button data-pane="pane-skills">Skills</button>
+      <button data-pane="pane-contact">Contact</button>
+      <button data-pane="pane-theme">Theme</button>
+    </div>
+    <div class="admin-body" id="adminBody">
+
+      <div class="admin-pane active" id="pane-hero">
+        <div class="hint">Edit the title block content shown at the very top of the page.</div>
+        <div class="field"><label>Full name</label><input id="in-name" type="text"></div>
+        <div class="field"><label>Tagline / summary line</label><textarea id="in-tagline"></textarea></div>
+        <div class="field"><label>Location</label><input id="in-location" type="text"></div>
+        <div class="field"><label>Email</label><input id="in-email" type="text"></div>
+        <div class="field"><label>Phone</label><input id="in-phone" type="text"></div>
+        <div class="field"><label>LinkedIn URL</label><input id="in-linkedin" type="text"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-about">
+        <div class="hint">Two short paragraphs about yourself, and three highlight stats.</div>
+        <div class="field"><label>Paragraph 1</label><textarea id="in-about1"></textarea></div>
+        <div class="field"><label>Paragraph 2</label><textarea id="in-about2"></textarea></div>
+        <div class="row2 field" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div><label style="font-size:11px;font-family:var(--mono);color:var(--ink-faint);">Stat 1 number</label><input id="in-stat1n" type="text"></div>
+          <div><label style="font-size:11px;font-family:var(--mono);color:var(--ink-faint);">Stat 1 label</label><input id="in-stat1l" type="text"></div>
+          <div><label style="font-size:11px;font-family:var(--mono);color:var(--ink-faint);">Stat 2 number</label><input id="in-stat2n" type="text"></div>
+          <div><label style="font-size:11px;font-family:var(--mono);color:var(--ink-faint);">Stat 2 label</label><input id="in-stat2l" type="text"></div>
+          <div><label style="font-size:11px;font-family:var(--mono);color:var(--ink-faint);">Stat 3 number</label><input id="in-stat3n" type="text"></div>
+          <div><label style="font-size:11px;font-family:var(--mono);color:var(--ink-faint);">Stat 3 label</label><input id="in-stat3l" type="text"></div>
+        </div>
+      </div>
+
+      <div class="admin-pane" id="pane-edu">
+        <div class="mini-head"><h4>Education entries</h4><button class="btn-sm" id="addEdu">+ Add entry</button></div>
+        <div id="eduEditList"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-exp">
+        <div class="mini-head"><h4>Experience entries</h4><button class="btn-sm" id="addExp">+ Add entry</button></div>
+        <div id="expEditList"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-proj">
+        <div class="mini-head"><h4>Project entries</h4><button class="btn-sm" id="addProj">+ Add entry</button></div>
+        <div id="projEditList"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-fyp">
+        <div class="hint">Your final year project spotlight.</div>
+        <div class="field"><label>Title</label><input id="in-fyptitle" type="text"></div>
+        <div class="field"><label>Description</label><textarea id="in-fypdesc"></textarea></div>
+      </div>
+
+      <div class="admin-pane" id="pane-extra">
+        <div class="mini-head"><h4>Extracurricular entries</h4><button class="btn-sm" id="addExtra">+ Add entry</button></div>
+        <div id="extraEditList"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-certs">
+        <div class="mini-head"><h4>Certifications</h4><button class="btn-sm" id="addCert">+ Add entry</button></div>
+        <div id="certEditList"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-awards">
+        <div class="mini-head"><h4>Awards &amp; honours</h4><button class="btn-sm" id="addAward">+ Add entry</button></div>
+        <div id="awardEditList"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-skills">
+        <div class="hint">Comma-separated lists. e.g. "SolidWorks, ANSYS, Abaqus"</div>
+        <div class="field"><label>Technical skills</label><textarea id="in-techskills"></textarea></div>
+        <div class="field"><label>Hobbies &amp; interests</label><textarea id="in-hobbies"></textarea></div>
+      </div>
+
+      <div class="admin-pane" id="pane-contact">
+        <div class="hint">Text shown above the contact buttons at the bottom of the page.</div>
+        <div class="field"><label>Contact subtext</label><textarea id="in-contactsub"></textarea></div>
+        <div class="field"><label>Footer credit line</label><input id="in-footname" type="text"></div>
+      </div>
+
+      <div class="admin-pane" id="pane-theme">
+        <div class="hint">Changes here apply instantly for you and are saved to this browser, so returning visitors on this device/browser will see them too.</div>
+        <div class="mode-toggle">
+          <button id="modeDark" class="active">Dark mode</button>
+          <button id="modeLight">Light mode</button>
+        </div>
+        <div class="field"><label>Accent colour presets</label></div>
+        <div class="swatch-grid" id="accentSwatches"></div>
+        <div class="custom-color-row">
+          <input type="color" id="customAccent" value="#c9803f">
+          <span style="font-size:12.5px; color:var(--ink-dim);">Custom accent colour</span>
+        </div>
+        <div class="field"><label>Secondary accent colour presets</label></div>
+        <div class="swatch-grid" id="accent2Swatches"></div>
+        <div class="custom-color-row">
+          <input type="color" id="customAccent2" value="#4a86a6">
+          <span style="font-size:12.5px; color:var(--ink-dim);">Custom secondary colour</span>
+        </div>
+        <button class="btn-sm" id="resetTheme" style="margin-top:6px;">Reset theme to default</button>
+      </div>
+
+    </div>
+    <div class="admin-foot">
+      <span class="save-status" id="saveStatus">✓ Saved</span>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-sm danger" id="resetAll">Reset all content</button>
+        <button class="btn btn-solid" id="saveAll" style="padding:9px 18px; font-size:12.5px;">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   DEFAULT DATA — seeded from the resume
+   ============================================================ */
+const DEFAULTS = {
+  hero:{
+    name:"Muhammad Umar Inayatullah",
+    tagline:"Fresh mechanical engineering graduate designing, simulating and building real hardware — from robotic grippers to CFD-optimised aerodynamics.",
+    location:"Attock, Pakistan",
+    email:"umarinayatullah@gmail.com",
+    phone:"+92-302-5120659",
+    linkedin:"https://www.linkedin.com/in/u-inayat"
+  },
+  about:{
+    p1:"I am a fresh, motivated and adaptable mechanical engineer with a strong ability to learn quickly and perform effectively in high-pressure environments. I am eager to apply my engineering knowledge in design, analysis and problem-solving while exploring new technologies and continuously improving my skills.",
+    p2:"I strive to contribute to an organisation that values innovation, teamwork and practical engineering solutions.",
+    stat1n:"3.22", stat1l:"CGPA — B.SC MECH. ENG",
+    stat2n:"6+", stat2l:"ENGINEERING PROJECTS",
+    stat3n:"3", stat3l:"LEADERSHIP ROLES"
+  },
+  education:[
+    {school:"University of Engineering and Technology, Taxila", degree:"Bachelor of Science, Mechanical Engineering — CGPA: 3.22", location:"Taxila, Pakistan", period:"2022 – 2026"},
+    {school:"Pakistan Scouts Cadet College Batrasi", degree:"Intermediate — Percentage: 86.81%", location:"Batrasi, Pakistan", period:"2020 – 2022"},
+    {school:"Pakistan Scouts Cadet College Batrasi", degree:"Middle & Matriculation in Sciences — Percentage: 91.18%", location:"Batrasi, Pakistan", period:"2016 – 2020"}
+  ],
+  experience:[
+    {company:"Heavy Industries Taxila (HIT) — Tank Manufacturing Factory", role:"Internship Trainee", location:"Taxila, Pakistan", period:"Jun 23, 2025 – Aug 1, 2025", bullets:"Completed a 6-week internship at the Tank Manufacturing Factory, gaining hands-on exposure to defense manufacturing and fabrication processes."}
+  ],
+  projects:[
+    {tag:"MECHATRONICS", title:"Robotic Hand Gripper", desc:"Developed a robotic hand gripper with more than three degrees of freedom, focusing on kinematic modeling and actuation to improve manipulation accuracy."},
+    {tag:"THERMAL / ANSYS", title:"Heat Transfer Analysis of a Car Radiator", desc:"Studied temperature difference across a car radiator to analyse fin and tube flow behaviour in ANSYS 19.2."},
+    {tag:"MATERIALS", title:"Material Testing — SS 304", desc:"Performed experimental analysis of stainless steel 304 to study tensile strength and stress-strain characteristics."},
+    {tag:"AEROSPACE", title:"UAS'24 Challenge Pakistan", desc:"Contributed to UAV design, fabrication, testing and competition-ready documentation for UAS Challenge Pakistan 2024."},
+    {tag:"CFD / FLUENT", title:"CFD Simulation of Car Aerodynamics", desc:"Simulated a car model in ANSYS Fluent to analyse airflow behaviour, pressure distribution and aerodynamic drag."}
+  ],
+  fyp:{ title:"Lubricant Analysis of Diesel Fuelled Engine", desc:"Analysis of lubricant performance and degradation in a diesel-fuelled engine." },
+  extracurricular:[
+    {org:"IMechE UET-Taxila Society", period:"2022 – 2025", desc:"Served as Head of the IMechE UET Taxila Student Chapter, leading initiatives to promote collaboration, professional development and knowledge-sharing among mechanical engineering students."},
+    {org:"NYA UET Taxila Society", period:"2022 – 2026", desc:"As Deputy Leader of the House, contributed to organising large-scale events and mentoring students for inter-university speech and debate competitions, including representation at two universities."}
+  ],
+  certifications:[
+    {title:"Petroleum Reservoir Engineering Fundamentals", issuer:"Mind Luster — Course Code: 06b7359", year:"2026"},
+    {title:"Computational Fluid Mechanics (Airflow Around a Spoiler)", issuer:"Coursera — Verified certificate", year:"2026"},
+    {title:"Design Fest '24 (ISUG x NUST)", issuer:"Certificate of Participation, held at NUST", year:"2024"}
+  ],
+  awards:[
+    {text:"Participated in UAS Challenge 2024 Pakistan, organised by IMechE at NUST", year:"2025"},
+    {text:"Appointed Deputy Leader of the House, National Youth Assembly UET Taxila", year:"2025"},
+    {text:"Participated in multiple speech competitions at EME College and Arid Agriculture University", year:"2023"}
+  ],
+  skills:{
+    technical:"ANSYS (CFD and Static Structure), Abaqus, SolidWorks, Microsoft Office",
+    hobbies:"Video Editing, Reading, Travelling, Sketching"
+  },
+  contact:{
+    sub:"Open to graduate engineering roles, internships and collaborative projects.",
+    footname:"© 2026 Muhammad Umar Inayatullah"
+  },
+  theme:{ mode:"dark", accent:"#c9803f", accent2:"#4a86a6" }
+};
+
+const ACCENTS = ["#c9803f","#c1543a","#4a86a6","#5c8a5c","#a06bc9","#c9a63f","#d16b93","#4fbf7a","#e0685f","#7c8ffc","#3f9ec9","#b08a5a"];
+
+const STORE_KEY = "umar_portfolio_data_v1";
+// Obfuscated so the plain string isn't sitting in the page source at a glance.
+const PW_HASH = (function(){
+  const s = "Umri@2003";
+  let h = 0;
+  for(let i=0;i<s.length;i++){ h = (h*31 + s.charCodeAt(i)) >>> 0; }
+  return h;
+})();
+function checkPassword(input){
+  let h = 0;
+  for(let i=0;i<input.length;i++){ h = (h*31 + input.charCodeAt(i)) >>> 0; }
+  return h === PW_HASH;
+}
+
+let data = loadData();
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      return deepMerge(structuredClone(DEFAULTS), parsed);
+    }
+  }catch(e){ console.warn("Could not load saved data, using defaults.", e); }
+  return structuredClone(DEFAULTS);
+}
+function deepMerge(base, extra){
+  if(Array.isArray(extra)) return extra;
+  if(typeof extra === "object" && extra !== null){
+    const out = {...base};
+    for(const k in extra){ out[k] = (typeof base[k] === "object" && base[k] !== null) ? deepMerge(base[k], extra[k]) : extra[k]; }
+    return out;
+  }
+  return extra===undefined ? base : extra;
+}
+function persist(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
+  catch(e){ console.warn("Could not save to localStorage", e); }
+}
+
+/* ============================================================
+   RENDER — VIEWER SIDE
+   ============================================================ */
+function esc(str){
+  const d = document.createElement("div");
+  d.textContent = str==null? "" : str;
+  return d.innerHTML;
+}
+
+function render(){
+  document.getElementById("brandName").textContent = data.hero.name;
+  document.getElementById("footName").textContent = data.contact.footname;
+
+  const nameParts = data.hero.name.trim().split(" ");
+  const last = nameParts.pop();
+  document.getElementById("heroName").innerHTML = esc(nameParts.join(" ")) + "<br><span>" + esc(last) + "</span>";
+  document.getElementById("heroTagline").textContent = data.hero.tagline;
+  document.getElementById("heroLocation").textContent = data.hero.location;
+  document.getElementById("heroEmail").textContent = data.hero.email;
+  document.getElementById("heroPhone").textContent = data.hero.phone;
+
+  document.getElementById("aboutText").innerHTML = "<p>"+esc(data.about.p1)+"</p><p>"+esc(data.about.p2)+"</p>";
+  const statEls = document.querySelectorAll("#aboutStats .stat-card");
+  statEls[0].innerHTML = `<div class="num">${esc(data.about.stat1n)}</div><div class="lbl">${esc(data.about.stat1l)}</div>`;
+  statEls[1].innerHTML = `<div class="num">${esc(data.about.stat2n)}</div><div class="lbl">${esc(data.about.stat2l)}</div>`;
+  statEls[2].innerHTML = `<div class="num">${esc(data.about.stat3n)}</div><div class="lbl">${esc(data.about.stat3l)}</div>`;
+
+  document.getElementById("eduList").innerHTML = data.education.map(e => `
+    <div class="tl-item reveal in">
+      <h3>${esc(e.school)}</h3>
+      <div class="meta">${esc(e.period)}</div>
+      <div class="loc">${esc(e.location)}</div>
+      <p style="color:var(--ink-dim); font-size:14.5px;">${esc(e.degree)}</p>
+    </div>`).join("");
+
+  document.getElementById("expList").innerHTML = data.experience.map(e => `
+    <div class="tl-item reveal in">
+      <h3>${esc(e.company)} — ${esc(e.role)}</h3>
+      <div class="meta">${esc(e.period)}</div>
+      <div class="loc">${esc(e.location)}</div>
+      <ul>${(e.bullets||"").split("\\n").filter(Boolean).map(b=>`<li>${esc(b)}</li>`).join("")}</ul>
+    </div>`).join("");
+
+  document.getElementById("projList").innerHTML = data.projects.map(p => `
+    <div class="panel tilt-card reveal in">
+      <span class="corner tl"></span><span class="corner br"></span>
+      <span class="tag">${esc(p.tag)}</span>
+      <h3>${esc(p.title)}</h3>
+      <p>${esc(p.desc)}</p>
+    </div>`).join("");
+  bindTilt();
+
+  document.getElementById("fypTitle").textContent = data.fyp.title;
+  document.getElementById("fypDesc").textContent = data.fyp.desc;
+
+  document.getElementById("extraList").innerHTML = data.extracurricular.map(x => `
+    <div class="panel reveal in">
+      <h3>${esc(x.org)}</h3>
+      <div class="meta">${esc(x.period)}</div>
+      <p>${esc(x.desc)}</p>
+    </div>`).join("");
+
+  document.getElementById("certList").innerHTML = data.certifications.map(c => `
+    <div class="strip-row reveal in">
+      <div><div class="t">${esc(c.title)}</div><div class="s">${esc(c.issuer)}</div></div>
+      <div class="y">${esc(c.year)}</div>
+      <div></div>
+    </div>`).join("");
+
+  document.getElementById("awardList").innerHTML = data.awards.map(a => `
+    <div class="strip-row reveal in">
+      <div><div class="t">${esc(a.text)}</div></div>
+      <div class="y">${esc(a.year)}</div>
+      <div></div>
+    </div>`).join("");
+
+  document.getElementById("techSkills").innerHTML = (data.skills.technical||"").split(",").map(s=>s.trim()).filter(Boolean).map(s=>`<span class="chip">${esc(s)}</span>`).join("");
+  document.getElementById("hobbySkills").innerHTML = (data.skills.hobbies||"").split(",").map(s=>s.trim()).filter(Boolean).map(s=>`<span class="chip">${esc(s)}</span>`).join("");
+
+  document.getElementById("contactSub").textContent = data.contact.sub;
+  document.getElementById("contactEmail").href = "mailto:"+data.hero.email;
+  document.getElementById("contactEmail").textContent = "Email me";
+  document.getElementById("contactLinkedin").href = data.hero.linkedin;
+  document.getElementById("contactPhoneBtn").href = "tel:"+data.hero.phone.replace(/[^0-9+]/g,"");
+
+  applyTheme();
+}
+
+function bindTilt(){
+  document.querySelectorAll(".tilt-card").forEach(card=>{
+    card.addEventListener("mousemove", e=>{
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width - .5;
+      const y = (e.clientY - r.top)/r.height - .5;
+      card.style.transform = `perspective(700px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateZ(6px)`;
+    });
+    card.addEventListener("mouseleave", ()=>{ card.style.transform = "perspective(700px) rotateY(0) rotateX(0)"; });
+  });
+}
+
+function applyTheme(){
+  document.documentElement.setAttribute("data-theme", data.theme.mode === "light" ? "light" : "dark");
+  document.documentElement.style.setProperty("--accent", data.theme.accent);
+  document.documentElement.style.setProperty("--accent2", data.theme.accent2);
+}
+
+/* background scene: dots + parallax */
+function seedDots(){
+  const holder = document.getElementById("bgDots");
+  let html = "";
+  for(let i=0;i<36;i++){
+    const x = Math.random()*100, y = Math.random()*100, d = (Math.random()*3+1).toFixed(2);
+    html += `<span style="left:${x}%; top:${y}%; opacity:${(Math.random()*.5+.2).toFixed(2)}"></span>`;
+  }
+  holder.innerHTML = html;
+}
+function seedTicks(){
+  const emblem = document.getElementById("emblem");
+  for(let i=0;i<24;i++){
+    const t = document.createElement("div");
+    t.className = "tick";
+    t.style.transform = `translate(-1px,-115px) rotate(${i*15}deg)`;
+    t.style.transformOrigin = "1px 116px";
+    emblem.appendChild(t);
+  }
+}
+function bindParallax(){
+  const scene = document.getElementById("bgScene");
+  const grid = document.getElementById("bgGrid");
+  window.addEventListener("mousemove", e=>{
+    const x = (e.clientX/window.innerWidth - .5) * 14;
+    const y = (e.clientY/window.innerHeight - .5) * 14;
+    grid.style.transform = `translateZ(-200px) scale(1.3) rotateX(${2+y}deg) rotateY(${x}deg)`;
+  }, {passive:true});
+}
+function bindReveal(){
+  const els = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); } });
+  }, {threshold:.15});
+  els.forEach(el=>io.observe(el));
+}
+
+/* ============================================================
+   ADMIN — LOGIN
+   ============================================================ */
+const fab = document.getElementById("admin-fab");
+const loginModal = document.getElementById("loginModal");
+const pwInput = document.getElementById("pwInput");
+const pwError = document.getElementById("pwError");
+const adminPanel = document.getElementById("admin-panel");
+
+fab.addEventListener("click", ()=>{
+  loginModal.classList.add("show");
+  pwError.style.display = "none";
+  pwInput.value = "";
+  setTimeout(()=>pwInput.focus(), 80);
+});
+document.getElementById("closeLogin").addEventListener("click", ()=> loginModal.classList.remove("show"));
+loginModal.addEventListener("click", e=>{ if(e.target === loginModal) loginModal.classList.remove("show"); });
+
+function attemptLogin(){
+  if(checkPassword(pwInput.value)){
+    loginModal.classList.remove("show");
+    openAdmin();
+  }else{
+    pwError.style.display = "block";
+  }
+}
+document.getElementById("pwSubmit").addEventListener("click", attemptLogin);
+pwInput.addEventListener("keydown", e=>{ if(e.key==="Enter") attemptLogin(); });
+
+document.getElementById("logoutBtn").addEventListener("click", ()=> adminPanel.classList.remove("show"));
+
+function openAdmin(){
+  fillAdminForms();
+  buildRepeaters();
+  buildThemeSwatches();
+  adminPanel.classList.add("show");
+}
+
+/* tabs */
+document.getElementById("adminTabs").addEventListener("click", e=>{
+  const btn = e.target.closest("button[data-pane]");
+  if(!btn) return;
+  document.querySelectorAll(".admin-tabs button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".admin-pane").forEach(p=>p.classList.remove("active"));
+  document.getElementById(btn.dataset.pane).classList.add("active");
+});
+
+/* ============================================================
+   ADMIN — FORM FIELDS (simple sections)
+   ============================================================ */
+function fillAdminForms(){
+  document.getElementById("in-name").value = data.hero.name;
+  document.getElementById("in-tagline").value = data.hero.tagline;
+  document.getElementById("in-location").value = data.hero.location;
+  document.getElementById("in-email").value = data.hero.email;
+  document.getElementById("in-phone").value = data.hero.phone;
+  document.getElementById("in-linkedin").value = data.hero.linkedin;
+
+  document.getElementById("in-about1").value = data.about.p1;
+  document.getElementById("in-about2").value = data.about.p2;
+  document.getElementById("in-stat1n").value = data.about.stat1n;
+  document.getElementById("in-stat1l").value = data.about.stat1l;
+  document.getElementById("in-stat2n").value = data.about.stat2n;
+  document.getElementById("in-stat2l").value = data.about.stat2l;
+  document.getElementById("in-stat3n").value = data.about.stat3n;
+  document.getElementById("in-stat3l").value = data.about.stat3l;
+
+  document.getElementById("in-fyptitle").value = data.fyp.title;
+  document.getElementById("in-fypdesc").value = data.fyp.desc;
+
+  document.getElementById("in-techskills").value = data.skills.technical;
+  document.getElementById("in-hobbies").value = data.skills.hobbies;
+
+  document.getElementById("in-contactsub").value = data.contact.sub;
+  document.getElementById("in-footname").value = data.contact.footname;
+}
+
+function readAdminForms(){
+  data.hero.name = document.getElementById("in-name").value.trim() || DEFAULTS.hero.name;
+  data.hero.tagline = document.getElementById("in-tagline").value.trim();
+  data.hero.location = document.getElementById("in-location").value.trim();
+  data.hero.email = document.getElementById("in-email").value.trim();
+  data.hero.phone = document.getElementById("in-phone").value.trim();
+  data.hero.linkedin = document.getElementById("in-linkedin").value.trim();
+
+  data.about.p1 = document.getElementById("in-about1").value.trim();
+  data.about.p2 = document.getElementById("in-about2").value.trim();
+  data.about.stat1n = document.getElementById("in-stat1n").value.trim();
+  data.about.stat1l = document.getElementById("in-stat1l").value.trim();
+  data.about.stat2n = document.getElementById("in-stat2n").value.trim();
+  data.about.stat2l = document.getElementById("in-stat2l").value.trim();
+  data.about.stat3n = document.getElementById("in-stat3n").value.trim();
+  data.about.stat3l = document.getElementById("in-stat3l").value.trim();
+
+  data.fyp.title = document.getElementById("in-fyptitle").value.trim();
+  data.fyp.desc = document.getElementById("in-fypdesc").value.trim();
+
+  data.skills.technical = document.getElementById("in-techskills").value.trim();
+  data.skills.hobbies = document.getElementById("in-hobbies").value.trim();
+
+  data.contact.sub = document.getElementById("in-contactsub").value.trim();
+  data.contact.footname = document.getElementById("in-footname").value.trim();
+}
+
+/* ============================================================
+   ADMIN — REPEATER LISTS (education, experience, projects, etc.)
+   ============================================================ */
+const REPEATERS = {
+  education:{ container:"eduEditList", addBtn:"addEdu",
+    fields:[["school","School / Institution"],["degree","Degree / detail"],["location","Location"],["period","Period"]] },
+  experience:{ container:"expEditList", addBtn:"addExp",
+    fields:[["company","Company"],["role","Role"],["location","Location"],["period","Period"],["bullets","Bullets (one per line)","textarea"]] },
+  projects:{ container:"projEditList", addBtn:"addProj",
+    fields:[["tag","Category tag"],["title","Title"],["desc","Description","textarea"]] },
+  extracurricular:{ container:"extraEditList", addBtn:"addExtra",
+    fields:[["org","Organisation"],["period","Period"],["desc","Description","textarea"]] },
+  certifications:{ container:"certEditList", addBtn:"addCert",
+    fields:[["title","Title"],["issuer","Issuer / detail"],["year","Year"]] },
+  awards:{ container:"awardEditList", addBtn:"addAward",
+    fields:[["text","Description"],["year","Year"]] }
+};
+
+function buildRepeaters(){
+  Object.keys(REPEATERS).forEach(key => renderRepeater(key));
+}
+
+function renderRepeater(key){
+  const cfg = REPEATERS[key];
+  const holder = document.getElementById(cfg.container);
+  holder.innerHTML = "";
+  data[key].forEach((item, idx) => {
+    const card = document.createElement("div");
+    card.className = "entry-card";
+    cfg.fields.forEach(([fk, label, type])=>{
+      const wrap = document.createElement("div");
+      wrap.className = "field";
+      const lab = document.createElement("label"); lab.textContent = label;
+      let input;
+      if(type === "textarea"){ input = document.createElement("textarea"); }
+      else { input = document.createElement("input"); input.type = "text"; }
+      input.value = item[fk] || "";
+      input.addEventListener("input", ()=>{ data[key][idx][fk] = input.value; });
+      wrap.appendChild(lab); wrap.appendChild(input);
+      card.appendChild(wrap);
+    });
+    const rm = document.createElement("div");
+    rm.className = "rm";
+    const rmBtn = document.createElement("button");
+    rmBtn.className = "btn-sm danger";
+    rmBtn.textContent = "Remove entry";
+    rmBtn.addEventListener("click", ()=>{
+      data[key].splice(idx,1);
+      renderRepeater(key);
+    });
+    rm.appendChild(rmBtn);
+    card.appendChild(rm);
+    holder.appendChild(card);
+  });
+  document.getElementById(cfg.addBtn).onclick = ()=>{
+    const blank = {};
+    cfg.fields.forEach(([fk])=> blank[fk] = "");
+    data[key].push(blank);
+    renderRepeater(key);
+  };
+}
+
+/* ============================================================
+   ADMIN — THEME PANEL
+   ============================================================ */
+function buildThemeSwatches(){
+  const a1 = document.getElementById("accentSwatches");
+  const a2 = document.getElementById("accent2Swatches");
+  a1.innerHTML = ACCENTS.map(c=>`<div class="swatch ${c.toLowerCase()===data.theme.accent.toLowerCase()?'active':''}" style="background:${c}" data-c="${c}"></div>`).join("");
+  a2.innerHTML = ACCENTS.map(c=>`<div class="swatch ${c.toLowerCase()===data.theme.accent2.toLowerCase()?'active':''}" style="background:${c}" data-c="${c}"></div>`).join("");
+
+  a1.querySelectorAll(".swatch").forEach(sw=> sw.addEventListener("click", ()=>{
+    data.theme.accent = sw.dataset.c;
+    applyTheme(); buildThemeSwatches();
+  }));
+  a2.querySelectorAll(".swatch").forEach(sw=> sw.addEventListener("click", ()=>{
+    data.theme.accent2 = sw.dataset.c;
+    applyTheme(); buildThemeSwatches();
+  }));
+
+  document.getElementById("customAccent").value = data.theme.accent;
+  document.getElementById("customAccent2").value = data.theme.accent2;
+
+  document.getElementById("modeDark").classList.toggle("active", data.theme.mode !== "light");
+  document.getElementById("modeLight").classList.toggle("active", data.theme.mode === "light");
+}
+document.getElementById("customAccent").addEventListener("input", e=>{ data.theme.accent = e.target.value; applyTheme(); buildThemeSwatches(); });
+document.getElementById("customAccent2").addEventListener("input", e=>{ data.theme.accent2 = e.target.value; applyTheme(); buildThemeSwatches(); });
+document.getElementById("modeDark").addEventListener("click", ()=>{ data.theme.mode = "dark"; applyTheme(); buildThemeSwatches(); });
+document.getElementById("modeLight").addEventListener("click", ()=>{ data.theme.mode = "light"; applyTheme(); buildThemeSwatches(); });
+document.getElementById("resetTheme").addEventListener("click", ()=>{
+  data.theme = structuredClone(DEFAULTS.theme);
+  applyTheme(); buildThemeSwatches();
+});
+
+/* ============================================================
+   ADMIN — SAVE / RESET
+   ============================================================ */
+document.getElementById("saveAll").addEventListener("click", ()=>{
+  readAdminForms();
+  persist();
+  render();
+  const status = document.getElementById("saveStatus");
+  status.classList.add("show");
+  setTimeout(()=>status.classList.remove("show"), 1800);
+});
+
+document.getElementById("resetAll").addEventListener("click", ()=>{
+  if(!confirm("Reset ALL portfolio content and theme back to the original resume data? This cannot be undone.")) return;
+  data = structuredClone(DEFAULTS);
+  persist();
+  render();
+  fillAdminForms();
+  buildRepeaters();
+  buildThemeSwatches();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+seedDots();
+seedTicks();
+bindParallax();
+render();
+bindReveal();
+
+})();
+</script>
+</body>
+</html>
